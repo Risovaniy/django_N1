@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from django.urls import reverse
 
 CSV_FILENAME = 'phones.csv'
 COLUMNS = [
@@ -40,8 +40,12 @@ def table_view(request):
 
 
 def home_view(request):
-    pages = ['admin/', 'table/', 'home/', 'current_time/', 'workdir/']
-    return HttpResponse('\n'.join(pages))
+    name_pages = ['home', 'time', 'workdir']
+    pages = list()
+    for page in name_pages:
+        pages.append(reverse(page))
+        pages.append('\n')
+    return HttpResponse(pages)
 
 
 def time_view(request):
